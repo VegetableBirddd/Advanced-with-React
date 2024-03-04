@@ -1,13 +1,16 @@
 import { memo, useEffect, useState } from "react";
 
+
+
 function Aaa() {
-    const [,setNum] = useState(1);
+    const [num,setNum] = useState(1);
 
     const [count, setCount] = useState(2);
 
 
     useEffect(() => {
         setInterval(()=> {
+            console.log(num)
             setNum(Math.random());
         }, 2000)
     },[]);
