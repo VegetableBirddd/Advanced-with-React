@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import MiniCalendar from "./components/MiniCalendar";
 
 function App() {
   const [num, setNum] = useState(0);
@@ -16,7 +17,11 @@ function App() {
   }, [num]);
 
   return (
-    <div onClick={() => setNum((prevNum) => prevNum + 1)}>{num}</div>
+    <>
+      <div onClick={() => setNum((prevNum) => prevNum + 1)}>{num}</div>
+      <MiniCalendar />
+    </>
+    
   );
 }
 
