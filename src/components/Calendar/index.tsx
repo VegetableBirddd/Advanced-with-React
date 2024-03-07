@@ -3,6 +3,7 @@ import MonthCalendar from './MonthCalendar';
 import './index.scss';
 import Header from './Header';
 import { CSSProperties, ReactNode } from 'react';
+import classnames from 'classnames';
 
 export interface CalendarProps {
     value: Dayjs;
@@ -19,8 +20,17 @@ export interface CalendarProps {
 
 
 function Calendar(props: CalendarProps) {
-    return <div className="calendar">
-        <Header />
+
+    const {
+        value,
+        style,
+        className,
+    } = props;
+
+    const classNames = classnames("calendar", className);
+
+    return <div className={classNames} style={style}>
+        <Header></Header>
         <MonthCalendar {...props}/>
     </div>
 }

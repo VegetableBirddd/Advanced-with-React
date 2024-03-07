@@ -42,7 +42,11 @@ function App() {
       <div onClick={() => setNum((prevNum) => prevNum + 1)}>{num}</div>
       {/* <MiniCalendar value={new Date('2023-2-1')} onChange={(date)=>{alert(date)}}/> */}
       <Test />
-      <Calendar value={dayjs('2024-03-07')}/>
+      <Calendar value={dayjs('2024-03-07')} dateInnerContent={(value) => {
+        return <div>
+          <p style={{background: 'yellowgreen', height: '30px'}}>{value.format('YYYY/MM/DD')}</p>
+        </div>
+      }}/>
     </>
     
   );
