@@ -84,7 +84,7 @@ const InternalCalendar: React.ForwardRefRenderFunction<CalendarRef, CalendarProp
   };
 
   return (
-    <div className="calendar">
+    <div className="mini-calendar">
       <div className="header">
         <button onClick={handlePrevMonth}>&lt;</button>
         <div>{date.getFullYear()}年{monthNames[date.getMonth()]}</div>

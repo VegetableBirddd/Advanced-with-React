@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import MiniCalendar, { CalendarRef } from "./components/MiniCalendar";
-import Calendar from "./components/MiniCalendar";
+import Calendar from "./components/Calendar";
+import dayjs from "dayjs";
 
 function Test() {
   const calendarRef = useRef<CalendarRef>(null);
@@ -17,7 +18,7 @@ function Test() {
     {/* <Calendar value={new Date('2023-3-1')} onChange={(date: Date) => {
         alert(date.toLocaleDateString());
     }}></Calendar> */}
-    <Calendar ref={calendarRef} value={new Date('2024-8-15')}></Calendar>
+    <MiniCalendar ref={calendarRef} value={new Date('2024-8-15')}></MiniCalendar>
   </div>
 }
 
@@ -39,8 +40,9 @@ function App() {
   return (
     <>
       <div onClick={() => setNum((prevNum) => prevNum + 1)}>{num}</div>
-      <MiniCalendar value={new Date('2023-2-1')} onChange={(date)=>{alert(date)}}/>
+      {/* <MiniCalendar value={new Date('2023-2-1')} onChange={(date)=>{alert(date)}}/> */}
       <Test />
+      <Calendar value={dayjs('2024-03-07')}/>
     </>
     
   );
