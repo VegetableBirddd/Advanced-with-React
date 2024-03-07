@@ -4,6 +4,7 @@ import './index.scss';
 import Header from './Header';
 import { CSSProperties, ReactNode } from 'react';
 import classnames from 'classnames';
+import LocaleContext from './LocaleContext';
 
 export interface CalendarProps {
     value: Dayjs;
@@ -25,14 +26,18 @@ function Calendar(props: CalendarProps) {
         value,
         style,
         className,
+        locale
     } = props;
 
     const classNames = classnames("calendar", className);
 
-    return <div className={classNames} style={style}>
-        <Header></Header>
-        <MonthCalendar {...props}/>
-    </div>
+    return <LocaleContext.Provider value={{locale:locale || navigator.language}}>
+        <div className={classNames} style={style}>
+            <Header></Header>
+            <MonthCalendar {...props}/>
+        </div>
+    </LocaleContext.Provider>
+    
 }
 
 export default Calendar;
