@@ -2,7 +2,7 @@ import { Dayjs } from 'dayjs';
 import MonthCalendar from './MonthCalendar';
 import './index.scss';
 import Header from './Header';
-import { CSSProperties, ReactNode } from 'react';
+import { CSSProperties, ReactNode, useState } from 'react';
 import classnames from 'classnames';
 import LocaleContext from './LocaleContext';
 
@@ -26,15 +26,24 @@ function Calendar(props: CalendarProps) {
         value,
         style,
         className,
-        locale
+        dateRender,
+        dateInnerContent,
+        locale,
+        onChange
     } = props;
 
+    const [curValue, setCurValue] = useState<Dayjs>(value);
+    
+    function selectHandler(date: Dayjs) {
+        setCurValue(date);
+        onChange?.(date);
+    }
     const classNames = classnames("calendar", className);
 
     return <LocaleContext.Provider value={{locale:locale || navigator.language}}>
         <div className={classNames} style={style}>
             <Header></Header>
-            <MonthCalendar {...props}/>
+            <MonthCalendar {...props} value={curValue} selectHandler={selectHandler}/>
         </div>
     </LocaleContext.Provider>
     
