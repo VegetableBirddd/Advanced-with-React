@@ -1,4 +1,4 @@
-import { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import MonthCalendar from './MonthCalendar';
 import './index.scss';
 import Header from './Header';
@@ -33,21 +33,43 @@ function Calendar(props: CalendarProps) {
     } = props;
 
     const [curValue, setCurValue] = useState<Dayjs>(value);
-    
-    function selectHandler(date: Dayjs) {
+
+    const [curMonth, setCurMonth] = useState<Dayjs>(value);
+
+    const classNames = classnames("calendar", className);
+        
+    function changeDate(date: Dayjs) {
         setCurValue(date);
+        setCurMonth(date);
         onChange?.(date);
     }
-    const classNames = classnames("calendar", className);
+    function selectHandler(date: Dayjs) {
+        changeDate(date);
+    }
 
-    return <LocaleContext.Provider value={{locale:locale || navigator.language}}>
+    function prevMonthHandler() {
+        setCurMonth(curMonth.subtract(1, 'month'));
+    }
+
+    function nextMonthHandler() {
+        setCurMonth(curMonth.add(1, 'month'));
+    }
+
+    function todayHandler() {
+        const date = dayjs(Date.now());
+        changeDate(date);
+    }
+
+    return <LocaleContext.Provider value={{
+        locale: locale || navigator.language
+    }}>
         <div className={classNames} style={style}>
-            <Header></Header>
-            <MonthCalendar {...props} value={curValue} selectHandler={selectHandler}/>
+            <Header todayHandler={todayHandler} curMonth={curMonth} prevMonthHandler={prevMonthHandler} nextMonthHandler={nextMonthHandler}></Header>
+            <MonthCalendar {...props} value={curValue} curMonth={curMonth} selectHandler={selectHandler}/>
         </div>
     </LocaleContext.Provider>
-    
 }
+
 
 export default Calendar;
 

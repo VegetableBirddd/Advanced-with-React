@@ -43,8 +43,8 @@ function App() {
       {/* <MiniCalendar value={new Date('2023-2-1')} onChange={(date)=>{alert(date)}}/> */}
       <Test />
       {/* <Calendar value={dayjs('2024-03-07')} locale="en-US"/> */}
-      <Calendar value={dayjs('2024-03-07')} onChange={(date) => {
-          alert(date.format('YYYY-MM-DD'));
+      <Calendar value={dayjs('2024-03-07')} locale="en-US" onChange={(date) => {
+          
       }}/>
     </>
     
