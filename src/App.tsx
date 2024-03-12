@@ -1,7 +1,15 @@
-import { useEffect, useRef, useState } from "react";
+import React,{ Suspense, useEffect, useRef, useState } from "react";
 import MiniCalendar, { CalendarRef } from "./components/MiniCalendar";
 import Calendar from "./components/Calendar";
 import dayjs from "dayjs";
+import { ErrorBoundary } from "react-error-boundary";
+
+function Bbb() {
+  useEffect(() => {
+      throw new Error('xxx');
+  }, [])
+  return <div>bbb</div>
+}
 
 function Test() {
   const calendarRef = useRef<CalendarRef>(null);
@@ -21,7 +29,7 @@ function Test() {
     <MiniCalendar ref={calendarRef} value={new Date('2024-8-15')}></MiniCalendar>
   </div>
 }
-
+const Toggle = React.lazy(()=>import('./Toggle'))
 function App() {
   const [num, setNum] = useState(0);
 
@@ -46,6 +54,17 @@ function App() {
       <Calendar value={dayjs('2024-03-07')} locale="en-US" onChange={(date) => {
           
       }}/>
+      <Suspense fallback={<div>loading...</div>}>
+        <Toggle />
+      </Suspense>
+      <ErrorBoundary fallbackRender={({ error }) => {
+            return <div>
+            <p>出错了：</p>
+            <div>{error.message}</div>
+        </div>
+      }}>
+        <Bbb></Bbb>
+      </ErrorBoundary>
     </>
     
   );
