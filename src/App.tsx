@@ -3,6 +3,8 @@ import MiniCalendar, { CalendarRef } from "./components/MiniCalendar";
 import Calendar from "./components/Calendar";
 import dayjs from "dayjs";
 import { ErrorBoundary } from "react-error-boundary";
+import { IconAdd } from "./components/Icon/icons/IconAdd";
+import { IconEmail } from "./components/Icon/icons/IconEmail";
 
 function Bbb() {
   useEffect(() => {
@@ -54,17 +56,20 @@ function App() {
       <Calendar value={dayjs('2024-03-07')} locale="en-US" onChange={(date) => {
           
       }}/>
+      <IconAdd size='40px'></IconAdd>
+      <IconEmail spin></IconEmail>
+      <IconEmail style={{color: 'blue', fontSize: '50px'}}></IconEmail>
       <Suspense fallback={<div>loading...</div>}>
         <Toggle />
       </Suspense>
-      <ErrorBoundary fallbackRender={({ error }) => {
+      {/* <ErrorBoundary fallbackRender={({ error }) => {
             return <div>
             <p>出错了：</p>
             <div>{error.message}</div>
         </div>
       }}>
         <Bbb></Bbb>
-      </ErrorBoundary>
+      </ErrorBoundary> */}
     </>
     
   );
