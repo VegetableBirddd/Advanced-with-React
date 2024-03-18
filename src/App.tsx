@@ -5,6 +5,53 @@ import dayjs from "dayjs";
 import { ErrorBoundary } from "react-error-boundary";
 import { IconAdd } from "./components/Icon/icons/IconAdd";
 import { IconEmail } from "./components/Icon/icons/IconEmail";
+import { create } from "zustand";
+import { persist } from "zustand/middleware"
+
+function logMiddleware(func:any) { //zustand中间件
+  return function(set:any, get:any, store:any) {
+
+    function newSet(...args:any) {
+      console.log('调用了 set，新的 state：', get());
+      return set(...args)
+    }
+  
+    return func(newSet, get, store)
+  }
+}
+
+// const useXxxStore = create(persist((set)=>({
+//   aaa:'',
+//   updateAaa:(value:string)=>set(()=>({aaa:value}))
+// }),{
+//   name:'w'
+// })
+// )
+
+const useXxxStore = create((set) => ({
+  aaa: '',
+  updateAaa: (value:string) => set(() => ({ aaa: value })),
+}))
+
+function Ccc(){
+
+  const updateAaa = useXxxStore((state:any) => state.updateAaa)
+  const aaa = useXxxStore((state:any) => state.aaa);
+  useEffect(()=>{
+    useXxxStore.subscribe((state) => {
+      console.log(useXxxStore.getState());
+    })
+  },[])
+  
+  return (
+    <div>
+        <input
+          onChange={(e) => updateAaa(e.currentTarget.value)}
+          value={aaa}
+        />
+    </div>
+  )
+}
 
 function Bbb() {
   useEffect(() => {
@@ -34,7 +81,8 @@ function Test() {
 const Toggle = React.lazy(()=>import('./Toggle'))
 function App() {
   const [num, setNum] = useState(0);
-
+  const aaa = useXxxStore((state:any)=>state.aaa);
+  console.log(1)
   useEffect(() => {
     console.log('effect')
     const timer = setInterval(() => {
@@ -49,6 +97,8 @@ function App() {
 
   return (
     <>
+      {aaa}
+      <Ccc />
       <div onClick={() => setNum((prevNum) => prevNum + 1)}>{num}</div>
       {/* <MiniCalendar value={new Date('2023-2-1')} onChange={(date)=>{alert(date)}}/> */}
       <Test />
@@ -75,4 +125,4 @@ function App() {
   );
 }
 
-export default App;
+export default Ccc;
