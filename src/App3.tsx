@@ -23,13 +23,15 @@ function reducer(state: Data, action: Action) {
             return {
                 result: state.result - action.num
             }
+        default:{
+            
+        }
     }
     return state;
 }
 
 function App() {
   const [res, dispatch] = useReducer<Reducer<Data, Action>>(reducer, { result: 0});
-  
 //第二种写法
 //   const [res, dispatch] = useReducer<Reducer<Data, Action>, string>(reducer, 'zero', (param) => {
 //     return {
